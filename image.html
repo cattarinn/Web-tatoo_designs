@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Случайная картинка без повторов</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+<img id="randomImage" src="" alt="Random Image">
+<script>
+    const images = [
+        "images/1.jpg",
+        "images/2.jpg",
+        "images/3.jpg",
+    ];
+    let shown = JSON.parse(localStorage.getItem("shownImages") || "[]");
+    let available = images.filter(img => !shown.includes(img));
+    if (available.length === 0) {
+        shown = [];
+        available = [...images];
+    }
+    const randomIndex = Math.floor(Math.random() * available.length);
+    const selected = available[randomIndex];
+    document.getElementById("randomImage").src = selected;
+    shown.push(selected);
+    localStorage.setItem("shownImages", JSON.stringify(shown));
+</script>
+</body>
+</html>
