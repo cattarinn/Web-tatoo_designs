@@ -28,18 +28,27 @@
         "images/2.jpg",
         "images/3.jpg",
     ];
+
     let shown = JSON.parse(localStorage.getItem("shownImages") || "[]");
     let available = images.filter(img => !shown.includes(img));
     if (available.length === 0) {
         shown = [];
         available = [...images];
     }
+
     const randomIndex = Math.floor(Math.random() * available.length);
     const selected = available[randomIndex];
-    document.getElementById("randomImage").src = selected;
+
+    const imgElement = document.getElementById("randomImage");
+
+    const tempImg = new Image();
+    tempImg.onload = () => {
+        imgElement.src = selected; 
+    };
+    tempImg.src = selected;
+
     shown.push(selected);
     localStorage.setItem("shownImages", JSON.stringify(shown));
 </script>
 </body>
 </html>
-
