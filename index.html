@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Tatoo design</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: #f0f0f0;
-        }
-        img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Tatoo design</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #f0f0f0;
+    }
+    #randomImage {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        display: none; 
+    }
+</style>
 </head>
 <body>
-<img id="randomImage" src="" alt="Random Image">
+<img id="randomImage" alt="Random Image">
 <script>
-    const images = [
-        "images/1.jpg",
-        "images/2.jpg",
-        "images/3.jpg",
-    ];
+const images = [
+    "images/1.jpg",
+    "images/2.jpg",
+    "images/3.jpg",
+];
 
-    let shown = JSON.parse(localStorage.getItem("shownImages") || "[]");
-    let available = images.filter(img => !shown.includes(img));
-    if (available.length === 0) {
-        shown = [];
-        available = [...images];
-    }
+let shown = JSON.parse(localStorage.getItem("shownImages") || "[]");
+let available = images.filter(img => !shown.includes(img));
+if (available.length === 0) {
+    shown = [];
+    available = [...images];
+}
 
-    const randomIndex = Math.floor(Math.random() * available.length);
-    const selected = available[randomIndex];
+const randomIndex = Math.floor(Math.random() * available.length);
+const selected = available[randomIndex];
 
-    const imgElement = document.getElementById("randomImage");
+const imgElement = document.getElementById("randomImage");
 
-    const tempImg = new Image();
-    tempImg.onload = () => {
-        imgElement.src = selected; 
-    };
-    tempImg.src = selected;
+const tempImg = new Image();
+tempImg.onload = () => {
+    imgElement.src = selected; 
+    imgElement.style.display = "block";
+};
+tempImg.src = selected;
 
-    shown.push(selected);
-    localStorage.setItem("shownImages", JSON.stringify(shown));
+shown.push(selected);
+localStorage.setItem("shownImages", JSON.stringify(shown));
 </script>
 </body>
 </html>
